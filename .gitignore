@@ -1,2 +1,3 @@
 node_modules/
 mongo-command.txt
+server/config/config.json
