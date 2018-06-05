@@ -125,7 +125,7 @@ describe('DELETE /todos/:id', () => {
         // query database using findById toNotExist
         // expect(null).toNotExist();
         Todo.findById(hexId).then((todo) => {
-          expect(todo).toBe(null);
+          expect(todo).toBeFalsy();
           done();
         }).catch((e) => done(e));
       });
@@ -219,7 +219,7 @@ describe('PATCH /todos/:id', () => {
       .expect((res) => {
         expect(res.body.todo.text).toBe('second updated text');
         expect(res.body.todo.completed).toBe(false);
-        expect(res.body.todo.completedAt).toBe(null);
+        expect(res.body.todo.completedAt).toBeFalsy();
       })
       .end(done);
   });
@@ -318,8 +318,7 @@ describe('POST /users/login', () => {
         }
 
         User.findById(users[1]._id).then((user) => {
-          expect(user.tokens[1]).toMatchObject({
-            _id: user.tokens[1]._id,
+          expect(user.toObject().tokens[1]).toMatchObject({
             access: 'auth',
             token: res.headers['x-auth']
           });
